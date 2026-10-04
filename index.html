@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#082b4c">
+  <meta name="description" content="Công cụ tính lương 2026 theo Nghị định 381, 350 và 182; có bảo hiểm người lao động 10,5%.">
+  <title>CÔNG CỤ TÍNH LƯƠNG 2026</title>
+  <style>
+    :root {
+      --navy-950: #061c33;
+      --navy-900: #082b4c;
+      --navy-800: #0d3b66;
+      --blue-700: #125b93;
+      --blue-100: #e9f3fb;
+      --ink: #13263a;
+      --muted: #617286;
+      --line: #b5c9da;
+      --paper: #f7fbff;
+      --white: #ffffff;
+      --green: #0c8861;
+      --green-dark: #076848;
+      --gold: #f4bd42;
+      --danger: #b74646;
+      --shadow: rgba(3, 28, 52, .18);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(40, 125, 183, .35), transparent 35%),
+        linear-gradient(155deg, #061d35 0%, #0b365e 48%, #0c5870 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+      padding: 12px 8px 28px;
+    }
+
+    .app-shell {
+      width: min(100%, 420px);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.42);
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: 0 22px 44px rgba(0, 11, 24, .34), 0 5px 0 rgba(4, 22, 42, .28);
+    }
+
+    header {
+      position: relative;
+      padding: 19px 15px 17px;
+      color: var(--white);
+      text-align: center;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.08), transparent 42%),
+        linear-gradient(135deg, var(--navy-950), var(--navy-800));
+      border-bottom: 3px solid #1a82b8;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      left: 14%;
+      right: 14%;
+      bottom: -3px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .brand-mark {
+      width: 45px;
+      height: 45px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 8px;
+      border: 1px solid rgba(255,255,255,.45);
+      border-radius: 13px;
+      color: #dff5ff;
+      font-size: 23px;
+      font-weight: 900;
+      background: linear-gradient(145deg, rgba(31, 147, 197, .82), rgba(9, 58, 101, .9));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 5px 0 rgba(1, 16, 30, .32);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      margin-bottom: 4px;
+      letter-spacing: .35px;
+      font-size: clamp(1.18rem, 5.3vw, 1.45rem);
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin-bottom: 5px;
+      color: #ccecff;
+      font-size: .75rem;
+      font-weight: 700;
+    }
+
+    .credit {
+      margin: 0;
+      color: #a8c9df;
+      font-size: .67rem;
+    }
+
+    .credit a { color: #d8f3ff; text-decoration: underline; text-underline-offset: 2px; }
+
+    main { padding: 12px 10px 16px; }
+
+    .notice {
+      margin: 0 0 11px;
+      padding: 10px 11px;
+      border: 1px solid #94bdd8;
+      border-radius: 12px;
+      color: #0b3b5d;
+      font-size: .77rem;
+      background: var(--blue-100);
+      box-shadow: 0 3px 0 rgba(22, 87, 127, .14);
+    }
+
+    .notice strong { color: var(--navy-900); }
+
+    .card {
+      margin: 0 0 11px;
+      padding: 12px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: 0 4px 0 rgba(8, 43, 76, .12), 0 8px 18px rgba(8, 43, 76, .06);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .step {
+      flex: 0 0 auto;
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      color: var(--white);
+      font-size: .78rem;
+      font-weight: 900;
+      background: var(--navy-800);
+      box-shadow: 0 3px 0 var(--navy-950);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--navy-900);
+      font-size: .97rem;
+      line-height: 1.2;
+    }
+
+    label {
+      display: block;
+      margin: 0 0 8px;
+      color: #26445e;
+      font-size: .76rem;
+      font-weight: 800;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: .68rem;
+      font-weight: 500;
+    }
+
+    select, input {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 10px;
+      border: 1.5px solid #a9c0d4;
+      border-radius: 10px;
+      outline: none;
+      color: var(--ink);
+      font: inherit;
+      font-size: .86rem;
+      background: #fbfdff;
+      box-shadow: inset 0 1px 2px rgba(4, 29, 53, .05), 0 2px 0 rgba(8, 43, 76, .08);
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    select:focus, input:focus {
+      border-color: #1684b7;
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(26, 130, 184, .15), 0 2px 0 rgba(8, 43, 76, .12);
+    }
+
+    select { cursor: pointer; }
+    input::placeholder { color: #99aabd; }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3px 9px;
+    }
+
+    .field-grid > label { min-width: 0; }
+
+    .wide { grid-column: 1 / -1; }
+
+    .object-meta {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      margin: 8px 0 2px;
+      padding: 8px 9px;
+      border: 1px solid #a9d5e9;
+      border-radius: 10px;
+      color: #125677;
+      font-size: .73rem;
+      background: #effaff;
+    }
+
+    .object-meta .badge {
+      flex: 0 0 auto;
+      padding: 2px 6px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: .65rem;
+      font-weight: 900;
+      background: #0b769d;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: -2px 0 8px;
+    }
+
+    .chip {
+      min-height: 26px;
+      padding: 3px 8px;
+      border: 1px solid #a9c6d9;
+      border-radius: 999px;
+      color: #1a5675;
+      font-size: .68rem;
+      font-weight: 800;
+      background: #f2f9fd;
+      cursor: pointer;
+      box-shadow: 0 2px 0 rgba(16, 75, 105, .12);
+    }
+
+    .chip:active { transform: translateY(1px); box-shadow: none; }
+
+    .rate-presets { margin: -2px 0 9px; }
+    .rate-presets .chip.active { border-color: #0b769d; color: #fff; background: #0b769d; }
+
+    .subnote {
+      margin: -3px 0 8px;
+      color: #6a7d8f;
+      font-size: .68rem;
+      line-height: 1.35;
+    }
+
+    .formula-box {
+      margin-top: 7px;
+      padding: 9px 10px;
+      border-left: 3px solid var(--gold);
+      border-radius: 8px;
+      color: #526d82;
+      font-size: .7rem;
+      background: #fffaf0;
+    }
+
+    .conditional { display: none; }
+    .conditional.show { display: block; }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 2px 0 0;
+      padding: 7px 8px;
+      border: 1px dashed #aec5d6;
+      border-radius: 9px;
+      color: #456177;
+      font-size: .7rem;
+      font-weight: 600;
+      background: #f8fbfd;
+    }
+
+    .check-row input { width: 16px; min-height: 16px; accent-color: var(--green); box-shadow: none; }
+
+    details {
+      margin-bottom: 11px;
+      border: 1.5px solid #b8cbd9;
+      border-radius: var(--radius);
+      background: #f9fcfe;
+      box-shadow: 0 3px 0 rgba(8, 43, 76, .1);
+    }
+
+    summary {
+      padding: 11px 12px;
+      color: var(--navy-900);
+      font-size: .79rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .legal-content {
+      padding: 0 12px 11px;
+      color: #536b7e;
+      font-size: .71rem;
+    }
+
+    .legal-content ul { margin: 6px 0 0; padding-left: 18px; }
+    .legal-content li { margin: 4px 0; }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin: 2px 0 11px;
+    }
+
+    button { font: inherit; }
+
+    .primary-btn, .secondary-btn {
+      min-height: 46px;
+      border-radius: 12px;
+      font-size: .86rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
+    }
+
+    .primary-btn {
+      border: 1px solid #056344;
+      color: #fff;
+      background: linear-gradient(150deg, #19a77b, var(--green-dark));
+      box-shadow: 0 4px 0 #04543b, 0 9px 16px rgba(4, 96, 66, .18);
+    }
+
+    .secondary-btn {
+      padding: 0 12px;
+      border: 1px solid #a9bfce;
+      color: #365a72;
+      background: #fff;
+      box-shadow: 0 4px 0 #cad9e3;
+    }
+
+    .primary-btn:hover, .secondary-btn:hover { filter: brightness(1.04); }
+    .primary-btn:active, .secondary-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 currentColor; }
+
+    .result-card {
+      display: none;
+      margin-top: 2px;
+      border: 1.5px solid #6cb99e;
+      border-radius: var(--radius);
+      background: linear-gradient(155deg, #f4fffb, #fff);
+      box-shadow: 0 5px 0 rgba(7, 104, 72, .16), 0 12px 20px rgba(7, 104, 72, .1);
+      overflow: hidden;
+    }
+
+    .result-card.show { display: block; animation: rise .28s ease-out; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+    .result-head {
+      padding: 13px 12px 11px;
+      color: #fff;
+      background: linear-gradient(145deg, #0c8861, #07573f);
+    }
+
+    .result-head h2 { margin: 0 0 3px; font-size: 1rem; }
+    .result-head p { margin: 0; color: #d8fff0; font-size: .7rem; }
+
+    .result-body { padding: 11px 12px 13px; }
+
+    .total-box {
+      display: grid;
+      gap: 3px;
+      margin-bottom: 10px;
+      padding: 11px;
+      border: 1px solid #b8e1d0;
+      border-radius: 11px;
+      background: #f2fff9;
+    }
+
+    .total-box .caption { color: #467966; font-size: .7rem; font-weight: 800; }
+    .total-box .amount { color: #075c42; font-size: 1.48rem; font-weight: 950; letter-spacing: .1px; }
+
+    .result-section-title {
+      margin: 10px 0 6px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #d8e7ef;
+      color: var(--navy-900);
+      font-size: .77rem;
+      font-weight: 900;
+    }
+
+    .breakdown { display: grid; gap: 5px; }
+
+    .result-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 9px;
+      font-size: .73rem;
+    }
+
+    .result-row .name { color: #536b7e; }
+    .result-row .value { color: #1b344a; font-weight: 850; text-align: right; white-space: nowrap; }
+    .result-row.total { margin-top: 4px; padding-top: 7px; border-top: 1px solid #bad4c7; }
+    .result-row.total .name, .result-row.total .value { color: #076448; font-weight: 950; }
+    .result-row.deduction .value { color: var(--danger); }
+    .result-row.net { margin-top: 6px; padding-top: 8px; border-top: 2px solid #0c8861; }
+    .result-row.net .name, .result-row.net .value { color: #07573f; font-size: .84rem; font-weight: 950; }
+
+    .result-note {
+      margin-top: 10px;
+      padding: 8px 9px;
+      border: 1px solid #e5d49a;
+      border-radius: 9px;
+      color: #6b5d2b;
+      font-size: .68rem;
+      background: #fffbea;
+    }
+
+    .error-note {
+      display: none;
+      margin: 8px 0 0;
+      padding: 8px 9px;
+      border: 1px solid #e1abab;
+      border-radius: 9px;
+      color: #8d3939;
+      font-size: .7rem;
+      background: #fff5f5;
+    }
+
+    footer {
+      padding: 8px 12px 14px;
+      color: #6b8091;
+      text-align: center;
+      font-size: .65rem;
+      line-height: 1.35;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 360px) {
+      body { padding-inline: 4px; }
+      main { padding-inline: 7px; }
+      .card { padding: 10px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .wide { grid-column: auto; }
+      .actions { grid-template-columns: 1fr; }
+      .secondary-btn { min-height: 38px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="brand-mark" aria-hidden="true">₫</div>
+      <h1>CÔNG CỤ TÍNH LƯƠNG 2026</h1>
+      <p class="subtitle">NĐ 381 CB cấp xã - NĐ 350 NV y tế - NĐ 182 giáo viên</p>
+      <p class="credit">Phát triển bởi thầy Đinh Như Huy - fb: <a href="https://www.facebook.com/mcnhuhuy" target="_blank" rel="noopener">https://www.facebook.com/mcnhuhuy</a></p>
+    </header>
+
+    <main>
+      <div class="notice">
+        <strong>Cách dùng:</strong> chọn đúng nhóm đối tượng, nhập các khoản trên bảng lương rồi bấm <strong>Hãy tính toán lương của tôi hiện hành</strong>. Các mức % chỉ là gợi ý theo 03 nghị định; cần đối chiếu quyết định chi trả thực tế.
+      </div>
+
+      <section class="card">
+        <div class="section-head"><span class="step">1</span><h2>Đối tượng và mức phụ cấp theo nghị định</h2></div>
+        <label>
+          <span class="label-row"><span>Đối tượng được hưởng lương</span><span class="hint">danh sách theo 03 NĐ</span></span>
+          <select id="objectSelect" aria-label="Đối tượng được hưởng lương">
+            <option value="teacher40" selected>NĐ 182 - Giáo viên THCS, THPT, GDTX: 40%</option>
+            <optgroup label="NĐ 182/2026 - Giáo dục">
+              <option value="teacher20">Nhân sự hỗ trợ giáo dục: 20%</option>
+              <option value="teacher25">Nhà giáo/HD thực hành đại học, đào tạo bồi dưỡng: 25%</option>
+              <option value="teacher30">Trung tâm chính trị; CĐ, TC; trung tâm GDNN: 30%</option>
+              <option value="teacher35">Giáo viên GDNN ở khu vực I, xã đảo/biên giới: 35%</option>
+              <option value="teacher40">Giáo viên THCS, THPT, GDTX, GDNN-GDTX: 40%</option>
+              <option value="teacher45">Giáo viên mầm non, tiểu học: 45%</option>
+              <option value="teacher45area">Giáo viên THCS, THPT, GDTX ở vùng I/II DTTS, đảo, biên giới: 45%</option>
+              <option value="teacher60">Trường năng khiếu; PT dân tộc bán trú; MN/TH vùng I/II: 60%</option>
+              <option value="teacher70">Nhà giáo, CBQL ở vùng đặc biệt khó khăn: 70%</option>
+              <option value="teacher80">DTNT, nội trú, chuyên, dự bị ĐH, trường đặc biệt: 80%</option>
+              <option value="teacherDisabled70">Dạy chuyên trách người khuyết tật (lớp riêng từ 70%): 70%</option>
+              <option value="teacherDisabled40">Dạy không chuyên trách lớp riêng người khuyết tật: 40%</option>
+              <option value="teacherInclusive35">Dạy hòa nhập chuyên trách (5% đến dưới 10%): 35%</option>
+              <option value="teacherInclusive40">Dạy hòa nhập chuyên trách (10% đến dưới 20%): 40%</option>
+              <option value="teacherInclusive45">Dạy hòa nhập chuyên trách (20% đến dưới 30%): 45%</option>
+              <option value="teacherInclusive50">Dạy hòa nhập chuyên trách (30% đến dưới 40%): 50%</option>
+              <option value="teacherInclusive55">Dạy hòa nhập chuyên trách (40% đến dưới 50%): 55%</option>
+              <option value="teacherInclusive60">Dạy hòa nhập chuyên trách (50% đến dưới 60%): 60%</option>
+              <option value="teacherInclusive65">Dạy hòa nhập chuyên trách (60% đến dưới 70%): 65%</option>
+              <option value="teacherInclusivePart5">Dạy hòa nhập không chuyên trách (5% đến dưới 10%): 5%</option>
+              <option value="teacherInclusivePart10">Dạy hòa nhập không chuyên trách (10% đến dưới 20%): 10%</option>
+              <option value="teacherInclusivePart15">Dạy hòa nhập không chuyên trách (20% đến dưới 30%): 15%</option>
+              <option value="teacherInclusivePart20">Dạy hòa nhập không chuyên trách (30% đến dưới 40%): 20%</option>
+              <option value="teacherInclusivePart25">Dạy hòa nhập không chuyên trách (40% đến dưới 50%): 25%</option>
+              <option value="teacherInclusivePart30">Dạy hòa nhập không chuyên trách (50% đến dưới 60%): 30%</option>
+              <option value="teacherInclusivePart35">Dạy hòa nhập không chuyên trách (60% đến dưới 70%): 35%</option>
+              <option value="teacherCustom">Nhà giáo/nhân sự giáo dục - tự nhập mức %</option>
+            </optgroup>
+            <optgroup label="NĐ 350/2026 - Nhân viên y tế">
+              <option value="health80">Y tế tâm thần, pháp y, cấp cứu, giải phẫu bệnh; trạm y tế vùng khó khăn: 80%</option>
+              <option value="health70">Khuyết tật đặc biệt nặng, phong/lao, HIV, sơ sinh; CDC, y tế dự phòng: 70%</option>
+              <option value="health60">Bệnh truyền nhiễm; xét nghiệm tác nhân; xạ trị, hóa trị, y học hạt nhân: 60%</option>
+              <option value="health50">Khuyết tật nặng; gây mê hồi sức, bỏng, da liễu, nhi; CĐHA, KSNK, dược lâm sàng: 50%</option>
+              <option value="health40">Khám chữa bệnh, xét nghiệm, dược, thiết bị y tế, dinh dưỡng, chăm sóc sức khỏe...: 40%</option>
+              <option value="health30">Truyền thông giáo dục sức khỏe, dân số; y tế trường học; không trực tiếp chuyên môn: 30%</option>
+              <option value="healthCustom">Nhân viên y tế - tự nhập mức %</option>
+            </optgroup>
+            <optgroup label="NĐ 381/2026 - Cán bộ, công chức cấp xã">
+              <option value="commune55">Cán bộ, công chức cấp xã không hưởng thu nhập tăng thêm: 55%</option>
+              <option value="commune25">Cán bộ, công chức cấp xã có hưởng lương/thu nhập tăng thêm: 25%</option>
+            </optgroup>
+            <option value="manual">Không áp dụng phụ cấp tự động - nhập thủ công</option>
+          </select>
+        </label>
+        <div class="object-meta" id="objectMeta" aria-live="polite">
+          <span class="badge" id="decreeBadge">NĐ 182</span>
+          <span id="objectMetaText">Mức gợi ý 40%; chỉ tính phụ cấp ưu đãi nghề khi thực tế được phân công và đủ điều kiện.</span>
+        </div>
+        <label>
+          <span class="label-row"><span>Phụ cấp nghề/ưu đãi theo nghị định (%)</span><span class="hint">có thể sửa</span></span>
+          <input id="professionPct" class="calc-input" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="40" aria-label="Phụ cấp nghề ưu đãi theo nghị định">
+        </label>
+        <div class="chips rate-presets" id="ratePresets" aria-label="Mức phụ cấp gợi ý">
+          <button type="button" class="chip" data-rate="20">20%</button>
+          <button type="button" class="chip" data-rate="30">30%</button>
+          <button type="button" class="chip active" data-rate="40">40%</button>
+          <button type="button" class="chip" data-rate="45">45%</button>
+          <button type="button" class="chip" data-rate="60">60%</button>
+          <button type="button" class="chip" data-rate="70">70%</button>
+          <button type="button" class="chip" data-rate="80">80%</button>
+        </div>
+        <p class="subnote" id="allowanceHint">Gợi ý cho giáo viên THPT/GDTX: thường gặp mức 40%; giáo viên ở địa bàn đặc thù có thể thuộc mức khác.</p>
+        <div class="conditional" id="communeDiffWrap">
+          <label>
+            <span class="label-row"><span>Chênh lệch phụ cấp công vụ theo NĐ 381 (đồng/tháng)</span><span class="hint">nếu có quyết định bù</span></span>
+            <input id="communeDiff" class="calc-input" type="number" inputmode="numeric" min="0" step="1000" value="0" placeholder="Ví dụ: 500000">
+          </label>
+          <p class="subnote">NĐ 381 quy định trường hợp khoản lương/thu nhập tăng thêm thấp hơn mức 55% thì được hưởng phần chênh lệch. Chỉ nhập khoản chênh lệch nếu quyết định chi trả của địa phương xác định có.</p>
+        </div>
+        <div class="formula-box" id="formulaNote">Căn cứ tính phụ cấp NĐ 182: (lương theo hệ số + phụ cấp chức vụ + vượt khung + hệ số chênh lệch bảo lưu) × tỷ lệ %.</div>
+      </section>
+
+      <section class="card">
+        <div class="section-head"><span class="step">2</span><h2>Lương và các hệ số chính</h2></div>
+        <label>
+          <span class="label-row"><span>Lương cơ sở (đồng/tháng)</span><span class="hint">chọn theo thời điểm áp dụng</span></span>
+          <select id="baseSalary" class="calc-input" aria-label="Lương cơ sở">
+            <option value="2340000" selected>2.340.000 đồng</option>
+            <option value="2530000">2.530.000 đồng</option>
+          </select>
+        </label>
+        <div class="chips">
+          <button type="button" class="chip" data-target="baseSalary" data-value="2340000">2,34 triệu</button>
+          <button type="button" class="chip" data-target="baseSalary" data-value="2530000">2,53 triệu</button>
+        </div>
+        <div class="field-grid">
+          <label>
+            <span class="label-row"><span>Hệ số lương</span><span class="hint">ví dụ 4,68</span></span>
+            <input id="salaryCoeff" class="calc-input" type="number" inputmode="decimal" min="0" step="0.01" value="4.68" placeholder="4.68">
+          </label>
+          <label>
+            <span class="label-row"><span>Hệ số phụ cấp chức vụ</span><span class="hint">không có: 0</span></span>
+            <input id="positionCoeff" class="calc-input" type="number" inputmode="decimal" min="0" step="0.01" value="0" placeholder="0">
+          </label>
+          <label>
+            <span class="label-row"><span>Hệ số chênh lệch bảo lưu</span><span class="hint">nếu có</span></span>
+            <input id="reservedCoeff" class="calc-input" type="number" inputmode="decimal" min="0" step="0.01" value="0" placeholder="0">
+          </label>
+          <label>
+            <span class="label-row"><span>Vượt khung</span><span class="hint">đồng/tháng</span></span>
+            <input id="overFrameAmount" class="calc-input" type="number" inputmode="numeric" min="0" step="1000" value="0" placeholder="Ví dụ: 547560">
+          </label>
+        </div>
+        <div class="chips">
+          <button type="button" class="chip" data-overframe="0">Vượt khung 0</button>
+          <button type="button" class="chip" data-overframe="5">Gợi ý 5% lương</button>
+          <button type="button" class="chip" data-overframe="6">Gợi ý 6% lương</button>
+        </div>
+        <p class="subnote">Với “phụ cấp thâm niên vượt khung”, nên nhập số tiền thực tế trên bảng lương. Nút gợi ý chỉ lấy tỷ lệ trên lương theo hệ số để tham khảo nhanh.</p>
+      </section>
+
+      <section class="card">
+        <div class="section-head"><span class="step">3</span><h2>Phụ cấp khác và căn cứ bảo hiểm</h2></div>
+        <div class="field-grid">
+          <label>
+            <span class="label-row"><span>Phụ cấp khu vực</span><span class="hint">hệ số</span></span>
+            <input id="regionCoeff" class="calc-input" type="number" inputmode="decimal" min="0" step="0.1" value="0.5" placeholder="0.5">
+          </label>
+          <label>
+            <span class="label-row"><span>Thâm niên nghề</span><span class="hint">%</span></span>
+            <input id="seniorityPct" class="calc-input" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="0" placeholder="Ví dụ: 20">
+          </label>
+          <label class="wide">
+            <span class="label-row"><span>Phụ cấp đặc thù/khoản khác</span><span class="hint">đồng/tháng</span></span>
+            <input id="otherAllowance" class="calc-input" type="number" inputmode="numeric" min="0" step="1000" value="0" placeholder="Ví dụ: 300000">
+          </label>
+        </div>
+        <div class="chips">
+          <button type="button" class="chip" data-target="regionCoeff" data-value="0">KV 0</button>
+          <button type="button" class="chip" data-target="regionCoeff" data-value="0.1">KV 0,1</button>
+          <button type="button" class="chip" data-target="regionCoeff" data-value="0.2">KV 0,2</button>
+          <button type="button" class="chip" data-target="regionCoeff" data-value="0.3">KV 0,3</button>
+          <button type="button" class="chip" data-target="regionCoeff" data-value="0.5">KV 0,5</button>
+          <button type="button" class="chip" data-target="seniorityPct" data-value="20">TN 20%</button>
+          <button type="button" class="chip" data-target="seniorityPct" data-value="25">TN 25%</button>
+          <button type="button" class="chip" data-target="seniorityPct" data-value="30">TN 30%</button>
+        </div>
+        <p class="subnote">Phụ cấp khu vực được tính nhanh theo hệ số × lương cơ sở. Thâm niên nghề được tính trên lương + chức vụ + vượt khung; hệ số bảo lưu không đưa vào căn cứ tính thâm niên nghề. Phụ cấp nghề/ưu đãi và phụ cấp công vụ theo 03 nghị định không đưa vào căn cứ đóng bảo hiểm.</p>
+        <label class="check-row">
+          <input id="otherForInsurance" class="calc-input" type="checkbox">
+          <span>Đưa “phụ cấp đặc thù/khoản khác” vào căn cứ đóng bảo hiểm (chỉ bật khi bảng lương/đơn vị xác định khoản này phải đóng).</span>
+        </label>
+      </section>
+
+      <details>
+        <summary>📌 Căn cứ tính và lưu ý pháp lý</summary>
+        <div class="legal-content">
+          <ul>
+            <li><strong>NĐ 182/2026:</strong> phụ cấp ưu đãi nghề giáo dục có các mức 20%, 25%, 30%, 35%, 40%, 45%, 60%, 70%, 80% và một số trường hợp dạy người khuyết tật; tính trên lương hiện hưởng, chức vụ, vượt khung và hệ số chênh lệch bảo lưu; không dùng để đóng/hưởng BHXH.</li>
+            <li><strong>NĐ 350/2026:</strong> phụ cấp ưu đãi nghề y tế có các mức 30%, 40%, 50%, 60%, 70%, 80%; không dùng để tính đóng/hưởng BHXH.</li>
+            <li><strong>NĐ 381/2026:</strong> phụ cấp công vụ cấp xã 55% hoặc 25% trên lương hiện hưởng, chức vụ và vượt khung; không dùng để tính đóng BHXH, BHYT.</li>
+            <li><strong>Bảo hiểm người lao động:</strong> app dùng 10,5% = BHXH 8% + BHYT 1,5% + BHTN 1%, tính trên căn cứ gồm lương theo hệ số, chức vụ, vượt khung, thâm niên nghề, hệ số bảo lưu và khoản khác nếu người dùng bật lựa chọn.</li>
+            <li>Thực nhận trong app là sau khoản bảo hiểm 10,5%; chưa trừ thuế thu nhập cá nhân, đoàn phí công đoàn, tạm ứng hoặc khoản khấu trừ riêng của đơn vị.</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="actions">
+        <button type="button" class="primary-btn" id="calculateBtn">🧮 Hãy tính toán lương của tôi hiện hành</button>
+        <button type="button" class="secondary-btn" id="resetBtn">Làm lại</button>
+      </div>
+      <div class="error-note" id="errorNote" role="alert"></div>
+
+      <section class="result-card" id="resultCard" aria-live="polite">
+        <div class="result-head">
+          <h2>KẾT QUẢ TÍNH LƯƠNG THÁNG</h2>
+          <p id="resultSubtitle">Đã tính theo thông tin bạn nhập.</p>
+        </div>
+        <div class="result-body">
+          <div class="total-box">
+            <div class="caption">THỰC NHẬN SAU KHI TRỪ BẢO HIỂM 10,5%</div>
+            <div class="amount" id="netAmount">0 đ</div>
+          </div>
+
+          <div class="result-section-title">Chi tiết các khoản được hưởng</div>
+          <div class="breakdown" id="incomeBreakdown"></div>
+
+          <div class="result-section-title">Khấu trừ bảo hiểm</div>
+          <div class="breakdown" id="insuranceBreakdown"></div>
+
+          <div class="result-note" id="resultNote"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Dữ liệu mức phụ cấp: NĐ 182/2026/NĐ-CP, NĐ 350/2026/NĐ-CP, NĐ 381/2026/NĐ-CP.<br>
+      Công cụ hỗ trợ tham khảo; quyết định chi trả và bảng lương của đơn vị là căn cứ cuối cùng.
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const OBJECTS = {
+        teacher20: { decree: 'NĐ 182', group: '182', rate: 20, base: 'education', note: 'Nhân sự hỗ trợ giáo dục; mức 20% theo Điều 3 NĐ 182.' },
+        teacher25: { decree: 'NĐ 182', group: '182', rate: 25, base: 'education', note: 'Nhà giáo/HD thực hành tại cơ sở giáo dục đại học, đào tạo bồi dưỡng.' },
+        teacher30: { decree: 'NĐ 182', group: '182', rate: 30, base: 'education', note: 'Trung tâm chính trị; cao đẳng, trung cấp; trung tâm giáo dục nghề nghiệp.' },
+        teacher35: { decree: 'NĐ 182', group: '182', rate: 35, base: 'education', note: 'Giáo viên giáo dục nghề nghiệp tại địa bàn được NĐ 182 quy định.' },
+        teacher40: { decree: 'NĐ 182', group: '182', rate: 40, base: 'education', note: 'Giáo viên THCS, THPT, GDTX, GDNN-GDTX và một số trường hợp tương ứng.' },
+        teacher45: { decree: 'NĐ 182', group: '182', rate: 45, base: 'education', note: 'Giáo viên mầm non, tiểu học và các trường hợp 45% theo Điều 3.' },
+        teacher45area: { decree: 'NĐ 182', group: '182', rate: 45, base: 'education', note: 'Giáo viên phổ thông/GDTX/GDNN-GDTX tại địa bàn đặc thù nêu trong NĐ 182.' },
+        teacher60: { decree: 'NĐ 182', group: '182', rate: 60, base: 'education', note: 'Trường năng khiếu, phổ thông dân tộc bán trú; mầm non, tiểu học ở địa bàn đặc thù.' },
+        teacher70: { decree: 'NĐ 182', group: '182', rate: 70, base: 'education', note: 'Nhà giáo, cán bộ quản lý cơ sở giáo dục ở vùng đặc biệt khó khăn.' },
+        teacher80: { decree: 'NĐ 182', group: '182', rate: 80, base: 'education', note: 'Dân tộc nội trú, nội trú, chuyên, dự bị đại học, trường đặc biệt và địa bàn đặc biệt khó khăn.' },
+        teacherDisabled70: { decree: 'NĐ 182', group: '182', rate: 70, base: 'education', note: 'Nhà giáo chuyên trách dạy người khuyết tật trong lớp riêng từ 70% học viên khuyết tật.' },
+        teacherDisabled40: { decree: 'NĐ 182', group: '182', rate: 40, base: 'education', note: 'Nhà giáo không chuyên trách dạy người khuyết tật trong lớp riêng từ 70% học viên.' },
+        teacherInclusive35: { decree: 'NĐ 182', group: '182', rate: 35, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 5% đến dưới 10% học viên khuyết tật.' },
+        teacherInclusive40: { decree: 'NĐ 182', group: '182', rate: 40, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 10% đến dưới 20% học viên khuyết tật.' },
+        teacherInclusive45: { decree: 'NĐ 182', group: '182', rate: 45, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 20% đến dưới 30% học viên khuyết tật.' },
+        teacherInclusive50: { decree: 'NĐ 182', group: '182', rate: 50, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 30% đến dưới 40% học viên khuyết tật.' },
+        teacherInclusive55: { decree: 'NĐ 182', group: '182', rate: 55, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 40% đến dưới 50% học viên khuyết tật.' },
+        teacherInclusive60: { decree: 'NĐ 182', group: '182', rate: 60, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 50% đến dưới 60% học viên khuyết tật.' },
+        teacherInclusive65: { decree: 'NĐ 182', group: '182', rate: 65, base: 'education', note: 'Dạy hòa nhập chuyên trách: từ 60% đến dưới 70% học viên khuyết tật.' },
+        teacherInclusivePart5: { decree: 'NĐ 182', group: '182', rate: 5, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 5% đến dưới 10% học viên khuyết tật.' },
+        teacherInclusivePart10: { decree: 'NĐ 182', group: '182', rate: 10, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 10% đến dưới 20% học viên khuyết tật.' },
+        teacherInclusivePart15: { decree: 'NĐ 182', group: '182', rate: 15, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 20% đến dưới 30% học viên khuyết tật.' },
+        teacherInclusivePart20: { decree: 'NĐ 182', group: '182', rate: 20, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 30% đến dưới 40% học viên khuyết tật.' },
+        teacherInclusivePart25: { decree: 'NĐ 182', group: '182', rate: 25, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 40% đến dưới 50% học viên khuyết tật.' },
+        teacherInclusivePart30: { decree: 'NĐ 182', group: '182', rate: 30, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 50% đến dưới 60% học viên khuyết tật.' },
+        teacherInclusivePart35: { decree: 'NĐ 182', group: '182', rate: 35, base: 'education', note: 'Dạy hòa nhập không chuyên trách: từ 60% đến dưới 70% học viên khuyết tật.' },
+        teacherCustom: { decree: 'NĐ 182', group: '182', rate: 0, base: 'education', note: 'Nhập mức % theo quyết định hưởng phụ cấp thực tế.' },
+
+        health80: { decree: 'NĐ 350', group: '350', rate: 80, base: 'health', note: 'Y tế tâm thần, pháp y, cấp cứu, giải phẫu bệnh; trạm y tế ở địa bàn đặc thù.' },
+        health70: { decree: 'NĐ 350', group: '350', rate: 70, base: 'health', note: 'Công việc y tế có mức độ đặc thù cao theo Điều 4 NĐ 350.' },
+        health60: { decree: 'NĐ 350', group: '350', rate: 60, base: 'health', note: 'Bệnh truyền nhiễm; xét nghiệm tác nhân; xạ trị, hóa trị, y học hạt nhân.' },
+        health50: { decree: 'NĐ 350', group: '350', rate: 50, base: 'health', note: 'Khuyết tật nặng; gây mê hồi sức, bỏng, da liễu, nhi; chẩn đoán hình ảnh, KSNK, dược lâm sàng.' },
+        health40: { decree: 'NĐ 350', group: '350', rate: 40, base: 'health', note: 'Khám chữa bệnh, xét nghiệm, dược, thiết bị y tế, dinh dưỡng, sức khỏe sinh sản và các việc tương ứng.' },
+        health30: { decree: 'NĐ 350', group: '350', rate: 30, base: 'health', note: 'Truyền thông giáo dục sức khỏe, dân số; nhân viên y tế trường học; không trực tiếp chuyên môn.' },
+        healthCustom: { decree: 'NĐ 350', group: '350', rate: 0, base: 'health', note: 'Nhập mức % theo quyết định hưởng phụ cấp thực tế.' },
+
+        commune55: { decree: 'NĐ 381', group: '381', rate: 55, base: 'commune', note: 'Cán bộ, công chức cấp xã không hưởng tiền lương, thu nhập tăng thêm theo nghị quyết HĐND.' },
+        commune25: { decree: 'NĐ 381', group: '381', rate: 25, base: 'commune', note: 'Cán bộ, công chức cấp xã có hưởng tiền lương, thu nhập tăng thêm theo nghị quyết HĐND.' },
+        manual: { decree: 'Tự nhập', group: 'manual', rate: 0, base: 'manual', note: 'Không tự động gán mức phụ cấp; nhập 0 nếu không có khoản này.' }
+      };
+
+      const $ = (id) => document.getElementById(id);
+      const objectSelect = $('objectSelect');
+      const professionPct = $('professionPct');
+      const resultCard = $('resultCard');
+      let hasCalculated = false;
+
+      const money = (value) => `${new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(Math.round(Number(value) || 0))} đ`;
+      const number = (value) => {
+        if (typeof value === 'number') return Number.isFinite(value) ? value : 0;
+        let text = String(value ?? '').trim().replace(/\s/g, '').replace(/[^0-9,.-]/g, '');
+        if (text.includes(',') && text.includes('.')) {
+          text = text.lastIndexOf(',') > text.lastIndexOf('.')
+            ? text.replace(/\./g, '').replace(',', '.')
+            : text.replace(/,/g, '');
+        } else if (text.includes(',')) {
+          text = text.replace(',', '.');
+        }
+        const parsed = Number(text);
+        return Number.isFinite(parsed) ? parsed : 0;
+      };
+      const val = (id) => number($(id).value);
+      const setValue = (id, value) => { $(id).value = value; };
+
+      function currentObject() {
+        return OBJECTS[objectSelect.value] || OBJECTS.manual;
+      }
+
+      function updateRatePresetState() {
+        const current = number(professionPct.value);
+        document.querySelectorAll('[data-rate]').forEach((button) => {
+          button.classList.toggle('active', Math.abs(number(button.dataset.rate) - current) < 0.001);
+        });
+      }
+
+      function updateObject(forceRate = true) {
+        const item = currentObject();
+        if (forceRate) {
+          professionPct.value = item.rate;
+          professionPct.dataset.auto = 'true';
+        }
+        $('decreeBadge').textContent = item.decree;
+        $('objectMetaText').textContent = item.rate
+          ? `Mức gợi ý ${item.rate}%; ${item.note}`
+          : item.note;
+        $('communeDiffWrap').classList.toggle('show', item.group === '381' && objectSelect.value === 'commune25');
+        $('allowanceHint').textContent = item.group === '182'
+          ? 'Mức % phải theo vị trí việc làm, cơ sở giáo dục và địa bàn; không cộng đồng thời nhiều mức ưu đãi nghề.'
+          : item.group === '350'
+            ? 'Chọn mức cao nhất nếu đồng thời được phân công nhiều công việc có mức phụ cấp khác nhau.'
+            : item.group === '381'
+              ? 'Phụ cấp công vụ không dùng để tính đóng, hưởng BHXH, BHYT; khoản chênh lệch chỉ nhập khi có căn cứ chi trả.'
+              : 'Nhập mức phụ cấp theo quyết định, hợp đồng hoặc bảng lương thực tế.';
+        $('formulaNote').textContent = item.group === '381'
+          ? 'Căn cứ tính phụ cấp NĐ 381: (lương hiện hưởng + phụ cấp chức vụ + phụ cấp thâm niên vượt khung) × tỷ lệ 55% hoặc 25%.'
+          : item.group === '182'
+            ? 'Căn cứ tính phụ cấp NĐ 182: (lương theo hệ số + phụ cấp chức vụ + vượt khung + hệ số chênh lệch bảo lưu) × tỷ lệ %.'
+            : item.group === '350'
+              ? 'Căn cứ tính phụ cấp NĐ 350: (lương theo hệ số + phụ cấp chức vụ + vượt khung + hệ số chênh lệch bảo lưu) × tỷ lệ %.'
+              : 'Khoản phụ cấp tự nhập được cộng vào tổng thu nhập; hãy kiểm tra căn cứ chi trả và căn cứ đóng bảo hiểm của đơn vị.';
+        updateRatePresetState();
+      }
+
+      function calculate() {
+        const baseSalary = val('baseSalary');
+        const salaryCoeff = val('salaryCoeff');
+        if (baseSalary <= 0 || salaryCoeff <= 0) {
+          $('errorNote').textContent = 'Vui lòng nhập lương cơ sở và hệ số lương lớn hơn 0.';
+          $('errorNote').style.display = 'block';
+          return;
+        }
+        $('errorNote').style.display = 'none';
+
+        const item = currentObject();
+        const position = baseSalary * val('positionCoeff');
+        const salary = baseSalary * salaryCoeff;
+        const reserved = baseSalary * val('reservedCoeff');
+        const overFrame = val('overFrameAmount');
+        const allowanceBasis = salary + position + overFrame + reserved;
+        const communeBasis = salary + position + overFrame;
+        const seniorityBasis = salary + position + overFrame;
+        const seniority = seniorityBasis * val('seniorityPct') / 100;
+        const legalBasis = item.base === 'commune' ? communeBasis : allowanceBasis;
+        const professionAllowance = legalBasis * val('professionPct') / 100;
+        const communeDifference = item.group === '381' ? val('communeDiff') : 0;
+        const regionAllowance = baseSalary * val('regionCoeff');
+        const otherAllowance = val('otherAllowance');
+        const gross = salary + position + reserved + overFrame + seniority + professionAllowance + communeDifference + regionAllowance + otherAllowance;
+
+        const otherForInsurance = $('otherForInsurance').checked ? otherAllowance : 0;
+        const insuranceBasis = salary + position + overFrame + seniority + reserved + otherForInsurance;
+        const insurance = insuranceBasis * 0.105;
+        const social = insuranceBasis * 0.08;
+        const health = insuranceBasis * 0.015;
+        const unemployment = insuranceBasis * 0.01;
+        const net = gross - insurance;
+
+        $('netAmount').textContent = money(net);
+        $('resultSubtitle').textContent = `${item.decree} • ${professionAllowance > 0 || communeDifference > 0 ? `phụ cấp ${number(professionPct.value)}%` : 'không có phụ cấp theo NĐ'} • lương cơ sở ${money(baseSalary)}`;
+
+        const rows = [
+          ['Lương theo hệ số', salary],
+          ['Phụ cấp chức vụ', position],
+          ['Phụ cấp thâm niên vượt khung', overFrame],
+          ['Hệ số chênh lệch bảo lưu', reserved],
+          ['Phụ cấp thâm niên nghề', seniority],
+          [`Phụ cấp theo ${item.decree}`, professionAllowance],
+          ...(communeDifference > 0 ? [['Chênh lệch phụ cấp công vụ NĐ 381', communeDifference]] : []),
+          ['Phụ cấp khu vực', regionAllowance],
+          ['Phụ cấp đặc thù/khoản khác', otherAllowance]
+        ];
+        $('incomeBreakdown').innerHTML = rows.map(([name, amount]) => `<div class="result-row"><span class="name">${name}</span><span class="value">${money(amount)}</span></div>`).join('') +
+          `<div class="result-row total"><span class="name">Tổng thu nhập trước bảo hiểm</span><span class="value">${money(gross)}</span></div>`;
+
+        $('insuranceBreakdown').innerHTML =
+          `<div class="result-row"><span class="name">Căn cứ đóng bảo hiểm</span><span class="value">${money(insuranceBasis)}</span></div>` +
+          `<div class="result-row deduction"><span class="name">BHXH 8%</span><span class="value">- ${money(social)}</span></div>` +
+          `<div class="result-row deduction"><span class="name">BHYT 1,5%</span><span class="value">- ${money(health)}</span></div>` +
+          `<div class="result-row deduction"><span class="name">BHTN 1%</span><span class="value">- ${money(unemployment)}</span></div>` +
+          `<div class="result-row deduction total"><span class="name">Tổng bảo hiểm người lao động 10,5%</span><span class="value">- ${money(insurance)}</span></div>` +
+          `<div class="result-row net"><span class="name">Thực nhận sau bảo hiểm</span><span class="value">${money(net)}</span></div>`;
+
+        const excluded = item.group === '182' ? 'Phụ cấp ưu đãi nghề NĐ 182' : item.group === '350' ? 'Phụ cấp ưu đãi nghề NĐ 350' : item.group === '381' ? 'Phụ cấp công vụ NĐ 381' : 'Khoản phụ cấp tự nhập';
+        $('resultNote').innerHTML = `<strong>Kiểm tra nhanh:</strong> Căn cứ bảo hiểm đang gồm lương theo hệ số + chức vụ + vượt khung + thâm niên nghề + hệ số bảo lưu${$('otherForInsurance').checked ? ' + khoản khác đã chọn' : ''}. ${excluded} và phụ cấp khu vực không được cộng vào căn cứ này theo cách tính của công cụ. Kết quả chưa trừ thuế TNCN, công đoàn phí hoặc khoản khấu trừ riêng.`;
+
+        resultCard.classList.add('show');
+        hasCalculated = true;
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function resetForm() {
+        setValue('baseSalary', '2340000');
+        setValue('objectSelect', 'teacher40');
+        setValue('salaryCoeff', '4.68');
+        setValue('positionCoeff', '0');
+        setValue('reservedCoeff', '0');
+        setValue('overFrameAmount', '0');
+        setValue('regionCoeff', '0.5');
+        setValue('seniorityPct', '0');
+        setValue('professionPct', '40');
+        setValue('communeDiff', '0');
+        setValue('otherAllowance', '0');
+        $('otherForInsurance').checked = false;
+        $('professionPct').dataset.auto = 'true';
+        resultCard.classList.remove('show');
+        $('errorNote').style.display = 'none';
+        hasCalculated = false;
+        updateObject(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      objectSelect.addEventListener('change', () => {
+        updateObject(true);
+        if (hasCalculated) calculate();
+      });
+      professionPct.addEventListener('input', () => {
+        professionPct.dataset.auto = 'false';
+        updateRatePresetState();
+        if (hasCalculated) calculate();
+      });
+      document.querySelectorAll('.calc-input').forEach((input) => {
+        input.addEventListener('input', () => { if (hasCalculated) calculate(); });
+        input.addEventListener('change', () => { if (hasCalculated) calculate(); });
+      });
+      document.querySelectorAll('[data-rate]').forEach((button) => {
+        button.addEventListener('click', () => {
+          professionPct.value = button.dataset.rate;
+          professionPct.dataset.auto = 'false';
+          updateRatePresetState();
+          if (hasCalculated) calculate();
+        });
+      });
+      document.querySelectorAll('[data-target]').forEach((button) => {
+        button.addEventListener('click', () => {
+          setValue(button.dataset.target, button.dataset.value);
+          if (hasCalculated) calculate();
+        });
+      });
+      document.querySelectorAll('[data-overframe]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const percent = number(button.dataset.overframe);
+          const amount = val('baseSalary') * val('salaryCoeff') * percent / 100;
+          setValue('overFrameAmount', Math.round(amount));
+          if (hasCalculated) calculate();
+        });
+      });
+      $('calculateBtn').addEventListener('click', calculate);
+      $('resetBtn').addEventListener('click', resetForm);
+      updateObject(true);
+    })();
+  </script>
+</body>
+</html>
